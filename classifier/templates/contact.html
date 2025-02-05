@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br>
+<div class="container my-5">
+    <h1 class="text-center mb-4">Contact Us</h1>
+    <p class="lead text-center">We'd love to hear from you! If you have any questions, feedback, or inquiries, feel free to reach out.</p>
+<br>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-body form-background">
+                    <h2 class="text-center">Contact Us</h2>
+
+                    <!-- Success Message -->
+                    {% if messages %}
+                        <div class="alert alert-success">
+                            {% for message in messages %}
+                                {{ message }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <form action="{% url 'contact' %}" method="POST">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" class="form-control custom-input" id="name" name="name" required>
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control custom-input" id="email" name="email" required>
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control custom-input" id="message" name="message" rows="5" required></textarea>
+                        </div>
+    
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Contact Information Section -->
+    <div class="mt-5">
+        <h2 class="text-primary">Contact Information</h2>
+        <p class="lead">You can also reach us through the following methods:</p>
+
+        <ul class="list-unstyled">
+            <li>
+                <strong>Email:</strong> <a href="zerowasteai@gmail.com">info@wasteclassification.com</a>
+            </li>
+            <li>
+                <strong>Phone:</strong> +91 6282673656
+            </li>
+            <li>
+                <strong>Address:</strong> xy street , New Delhi , India
+            </li>
+        </ul>
+    </div>
+
+    <!-- Social Media Links Section -->
+    <div class="mt-5">
+        <h3 class="text-primary">Follow Us</h3>
+        <p class="lead">Stay connected with us on social media for updates and news.</p>
+        
+        <div>
+            <a href="https://x.com/ANANDHU20526609" class="me-3"><i class="fab fa-twitter fa-2x"></i></a>
+            <a href="https://www.linkedin.com/in/anandu-pg" class="me-3"><i class="fab fa-linkedin fa-2x"></i></a>
+            <a href="https://www.instagram.com/ana.ndupg/" class="me-3"><i class="fab fa-instagram fa-2x"></i></a>
+            <a href="https://github.com/Anandu-pg" class="me-3"><i class="fab fa-github fa-2x"></i></a>
+        </div>
+    </div>
+</div>
+<br><br>
+
+<!-- Custom CSS -->
+<style>
+    .form-background {
+        background-color: #212529; /* Dark background color for the form */
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .custom-input {
+        background-color: #212529; /* Darker background for input fields */
+        border: 1px solid #e4e7ea;  /* Light gray border */
+        color: #ffffff;  /* White text color for input fields */
+    }
+
+    /* Focus effect on input fields */
+    .custom-input:focus {
+        background-color: #444; /* Slightly lighter background when focused */
+        border-color: #e2ecf6;  /* Lighter border color on focus */
+        box-shadow: 0 0 5px rgba(46, 125, 50, 0.5);  /* Green shadow when focused */
+    }
+
+    /* Ensure the text stays white when typing */
+    .custom-input::placeholder {
+        color: #ffffff; /* White placeholder text */
+    }
+
+    .custom-input:focus, .custom-input {
+        color: #ffffff; /* White text while typing */
+    }
+
+    /* Social Media Icons Styling */
+    .fab {
+        font-size: 2em; /* Increase the size of the icons */
+        color: #3809f7; /* Green color for icons */
+        transition: color 0.3s ease-in-out;
+    }
+
+    .fab:hover {
+        color: #ff0101; /* Darker green on hover */
+    }
+</style>
+
+{% endblock %}

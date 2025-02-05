@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="chat-container">
+    <h2 class="chat-title">Waste Management AI Chatbot</h2>
+
+    <div class="chat-box" id="chatBox">
+        <div class="bot-message">
+            <strong>Bot:</strong> Hello! Ask me anything about waste management, recycling, or composting.
+        </div>
+    </div>
+
+    <div class="chat-input">
+        <form id="chatForm"> {% csrf_token %}  </form> <input type="text" id="userQuery" placeholder="Type your question..." onkeypress="handleKeyPress(event)">
+        <button onclick="sendQuery()">Send</button>
+    </div>
+</div>
+
+<style>
+    /* ChatGPT-like UI with increased width and distance between question and answer box */
+    .chat-container {
+        width: 800px;
+        margin: auto;
+        background: #212529;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        height: 60vh;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .chat-title {
+        text-align: center;
+        font-size: 22px;
+        font-weight: bold;
+        color: #ffffff;
+        margin-bottom: 15px;
+    }
+
+    .chat-box {
+        flex: 1;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        padding: 15px;
+        background: #000000;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .chat-box div {
+        max-width: 80%;
+        padding: 12px 15px;
+        border-radius: 10px;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    .bot-message {
+        background: #8486c1;
+        align-self: flex-start;
+        color: #ffffff;
+        border: 1px solid #c3dafc;
+    }
+
+    .user-message {
+        background: #d1c4e9;
+        align-self: flex-end;
+        color: #fff;
+        border: 1px solid #a994c9;
+    }
+
+    .chat-input {
+        display: flex;
+        margin-top: 15px;
+        padding: 10px;
+        background: #000000;
+        border-top: 1px solid #ddd;
+    }
+
+    .chat-input input {
+        flex: 1;
+        padding: 12px;
+        border: 1px solid #000000;
+        border-radius: 8px;
+        font-size: 16px;
+        outline: none;
+    }
+
+    .chat-input button {
+        background: #007bff;
+        color: #ffffff;
+        border: none;
+        padding: 12px 20px;
+        margin-left: 10px;
+        cursor: pointer;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: 0.3s;
+    }
+
+    .chat-input button:hover {
+        background: #0056b3;
+    }
+</style>
+
+<script>
+    function sendQuery() {
+        var query = document.getElementById("userQuery").value;
+        if (!query.trim()) return;
+
+        var chatBox = document.getElementById("chatBox");
+
+        // Add user message
+        var userMessage = `<div class="user-message"><strong>You:</strong> ${query}</div>`;
+        chatBox.innerHTML += userMessage;
+
+        var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        fetch("/get_bot_response/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-CSRFToken": csrftoken,
+            },
+            body: "query=" + encodeURIComponent(query), // Correct parameter name
+        })
+        .then(response => response.json())
+        .then(data => {
+            var botMessage = `<div class="bot-message"><strong>Bot:</strong> ${data.response}</div>`;
+            chatBox.innerHTML += botMessage;
+            chatBox.scrollTop = chatBox.scrollHeight;
+        });
+
+        document.getElementById("userQuery").value = "";
+    }
+
+    function handleKeyPress(event) {
+        if (event.key === "Enter") {
+            sendQuery();
+        }
+    }
+</script>
+
+{% endblock %}

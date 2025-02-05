@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5 ">
+    <h1 class="text-center mb-4">Classification Result</h1>
+
+    <br>
+    <!-- Row to hold two cards, centered -->
+    <div class="row d-flex justify-content-center">
+        <!-- Left Card: Uploaded Image -->
+        <div class="col-md-4 mb-4"> <!-- Decreased the width -->
+            <div class="card h-100 custom-card">
+                <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                    <h3 class="mb-3 text-center">Uploaded Image</h3>
+                    <img src="{{ image_url }}" alt="Uploaded Image" class="img-fluid rounded shadow mb-4" 
+                         style="width: 270px; height: 270px; object-fit: cover;">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Right Card: Classification Result (Label and Score) -->
+        <div class="col-md-4 mb-4"> <!-- Decreased the width -->
+            <div class="card h-100 custom-card">
+                <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                    <div class="mb-3">
+                        <h3 class="text-center">Waste Label:</h3>
+                        <p class="lead text-success text-center" style="font-weight: 900; font-size: 2rem; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">
+                            <b>{{ label }}</b>
+                        </p>
+                    </div>
+                    <div class="mb-3">
+                        <h3 class="text-center">Confidence Score:</h3>
+                        <p class="lead text-info text-center"><b>{{ confidence_score }}</b></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <!-- AI Carbon Footprint Info Section -->
+    <div class="mb-4">
+        <div class="d-flex align-items-center">
+            <!-- AI Chatbot Icon with Warning Color -->
+            <i class="fas fa-robot fa-2x me-3 text-warning"></i>
+            <!-- AI Carbon Footprint Info Heading -->
+            <h3 class="mb-0">AI Carbon Footprint Info</h3>
+        </div>
+        <br>
+        <p class="lead">{{ carbon_footprint }}</p>
+    </div>
+
+    <!-- Reuse Info Section -->
+    <div class="mb-4">
+        <div class="d-flex align-items-center">
+            <!-- AI Chatbot Icon with Warning Color -->
+            <i class="fas fa-robot fa-2x me-3 text-warning"></i>
+            <!-- AI Reuse Info Heading -->
+            <h3 class="mb-0">AI Reuse Info</h3>
+        </div>
+        <br>
+        <p class="lead">{{ reuse }}</p>
+    </div>
+
+    <!-- Compost Info Section -->
+    <div class="mb-4">
+        <div class="d-flex align-items-center">
+            <!-- AI Chatbot Icon with Warning Color -->
+            <i class="fas fa-robot fa-2x me-3 text-warning"></i>
+            <!-- AI Compost Info Heading -->
+            <h3 class="mb-0">AI Compost Info</h3>
+        </div>
+        <br>
+        <p class="lead">{{ compost }}</p>
+    </div>
+    <br><br>
+</div>
+
+<!-- Custom CSS -->
+<style>
+    .custom-card {
+        background-color: #212529; /* Dark background color for the card */
+        color: white; /* Ensure text is visible on dark background */
+        width: 80%;  /* Adjust the width as per your requirement */
+        margin: 0 auto;  /* Center the card */
+    }
+</style>
+{% endblock %}

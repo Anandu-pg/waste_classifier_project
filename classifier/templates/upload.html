@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="container d-flex justify-content-center align-items-center" style="height: 80vh;">
+        <div class="mb-3" style="width: 400px; padding: 20px; border: 2px solid #212529; border-radius: 10px; background-color: #212529;">
+            
+            <!-- File Input Label with Icon -->
+            <label for="file-upload" class="form-label text-light fw-bold d-block" style="cursor: pointer; font-size: 1.2rem;  margin-bottom: 10px;">
+                <i class="fas fa-upload"></i> Upload Image
+            </label>
+
+            <!-- Styled File Input with Custom Button -->
+            <label for="file-upload" class="btn btn-info btn-lg" style="width: 100%; border-radius: 10px; padding: 12px 20px; font-size: 1.1rem; background-color: #00ffcc; border-color: #00ffcc; text-align: center;">
+                <b>Choose File</b>
+            </label>
+            <input type="file" id="file-upload" name="image" accept="image/*" required class="form-control form-control-lg" style="display: none;" onchange="displayFileName()">
+
+            <!-- Display File Name -->
+            <p id="file-name" class="text-light mt-2" style="font-size: 0.9rem;"></p>
+
+            <!-- Classify Button -->
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-success btn-lg" id="classify-btn" style="border-radius: 10px; padding: 12px 20px; font-size: 1.1rem; background-color: #00ffcc; border-color: #00ffcc;">
+                    <b>Classify</b>
+                </button>
+            </div>
+
+            <!-- Loading Animation (Initially Hidden) -->
+            <div id="loading-spinner" class="text-center mt-3" style="display: none;">
+                <div class="spinner-border text-info" role="status">
+                    <span class="visually-hidden">Processing...</span>
+                </div>
+                <p class="text-light mt-2">Processing...</p>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- Adding Hover Effects using Custom Styles -->
+<style>
+    .form-control:focus {
+        border-color: #00ffcc; /* Bright border color when focused */
+        box-shadow: 0 0 5px rgba(0, 255, 204, 0.5); /* Slight glow effect */
+    }
+
+    .btn-success:hover {
+        background-color: #00cc99; /* Slightly darker green on hover */
+        border-color: #00cc99; /* Darker green for border */
+        transform: scale(1.05); /* Slight enlarge effect */
+    }
+
+    #loading-spinner {
+        font-size: 1.1rem;
+    }
+</style>
+
+<!-- JavaScript to Display the File Name and Show Loading Spinner -->
+<script>
+    function displayFileName() {
+        const fileInput = document.getElementById('file-upload');
+        const fileName = fileInput.files[0].name;
+        document.getElementById('file-name').textContent = fileName;
+    }
+
+    // Show Loading Spinner when Classify Button is Clicked
+    const form = document.querySelector('form');
+    const classifyButton = document.getElementById('classify-btn');
+    const loadingSpinner = document.getElementById('loading-spinner');
+
+    form.onsubmit = function() {
+        classifyButton.style.display = 'none'; // Hide Classify button
+        loadingSpinner.style.display = 'block'; // Show loading spinner
+    };
+</script>
+
+{% endblock %}
